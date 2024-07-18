@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int func(int i, int j, vector<vector<int>>& grid, vector<vector<int>>& dp, int m, int n){
+
+        if (i>m-1||j>n-1) return 10e4;
+        
+        if (i==m-1 && j==n-1) return grid[i][j];
+        
+        if (dp[i][j] != -1) return dp[i][j];
+
+        int r = func(i, j+1, grid, dp, m, n);
+        int d = func(i+1, j, grid, dp, m, n);
+
+        return dp[i][j] = grid[i][j] + min(r, d);
+    }
+
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+
+        vector<vector<int>> dp (m, vector<int> (n, -1));
+        
+        return func(0, 0, grid, dp, m, n);
+    }
+};
